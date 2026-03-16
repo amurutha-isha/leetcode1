@@ -1,0 +1,41 @@
+class Solution {
+    public int totalNQueens(int n) { 
+    
+     List<List<String>> board = new ArrayList<>();
+     for(int i= 0 ; i < n; i++)
+     {
+     List<String> ds = new ArrayList<>(); 
+     for(int j =0; j< n; j++)
+     {
+        ds.add(".");
+     } board.add(ds);
+     }
+     int[] left = new int[n];
+     int[] ld = new int[2 * n -1];
+     int[] ud = new int[2*n - 1];
+
+
+     int result = validBoard(0,0, board, n,ld, left, ud);
+     return (result);
+
+    }
+
+    public int validBoard(int col, int c,List<List<String>> board, int n, int[] ld, int[] left, int[] ud){
+        if(col == n){ c+=1;
+            return c;
+        }
+        for(int row =0; row< n; row++){
+            if(left[row] == 0 && ud[(n-1) + (col-row)] == 0 && ld[col + row] == 0){
+                board.get(row).set(col, "Q");
+                left[row] = 1; ud[(n-1) + (col-row)] =1; ld[col + row] =1;
+                c = validBoard(col +1,c, board, n, ld, left, ud);
+                board.get(row).set(col, ".");
+                left[row] = 0; ud[(n-1) + (col-row)] =0; ld[col + row] =0;
+
+            }
+
+        } return c;
+    }
+
+}  
+   
